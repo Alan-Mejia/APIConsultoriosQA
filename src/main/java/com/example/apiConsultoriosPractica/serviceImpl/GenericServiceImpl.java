@@ -17,6 +17,7 @@ public abstract class GenericServiceImpl<T extends SharedInfo, ID extends Serial
 
     public GenericServiceImpl(GenericRepository<T, ID> genericRepository) {
         this.genericRepository = genericRepository;
+
     }
 
     @Override
