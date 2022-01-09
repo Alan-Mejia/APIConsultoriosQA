@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "/api/v1/users")
+@RequestMapping(path = "api/v1/users")
 public class UserController extends GenericControllerImpl<User,UserServiceImpl>{
 
 }

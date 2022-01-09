@@ -10,25 +10,26 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Data
 public class SharedInfo implements Serializable  {
-    /*@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Integer id;
+    private Long id;
 
-    @Column(name = "Role")
-    private Integer role;
-
-    @Column(name = "Status")
+    @Column(name="Status")
     private Integer status;
 
-    @Column(name = "CreationTime")
-    private LocalDateTime creationTime;
+    @Column(name="Creationtime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date creationTime;
 
-    @Column(name = "ModificationTime")
-    private LocalDateTime modificationTime;
+    @Column(name="Modificationtime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date modificationTime;
 
-    @Column(name = "UserCreator")
-    private Integer userCreator;
-    */
+    @Column(name="Usermodifier")
+    private String userModifier;
 
+    @Column(name="Usercreator")
+    private String userCreator;
 }

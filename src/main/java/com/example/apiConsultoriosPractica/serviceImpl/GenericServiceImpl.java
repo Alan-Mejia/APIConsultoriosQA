@@ -5,6 +5,8 @@ import com.example.apiConsultoriosPractica.models.SharedInfo;
 import com.example.apiConsultoriosPractica.models.User;
 import com.example.apiConsultoriosPractica.repository.GenericRepository;
 import com.example.apiConsultoriosPractica.service.GenericService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -35,6 +37,7 @@ public abstract class GenericServiceImpl<T extends SharedInfo, ID extends Serial
     @Override
     @Transactional
     public T getById(ID id) {
+        ResponseEntity responseEntity;
         return genericRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User","Id",id));
     }
 
@@ -42,17 +45,6 @@ public abstract class GenericServiceImpl<T extends SharedInfo, ID extends Serial
     @Transactional
     public T update(T user, ID id) {
         T existingUser = genericRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User","Id",id));
-//        existingUser.setName(user.getName());
-//        existingUser.setLastName(user.getLastName());
-//        existingUser.setSurname(user.getSurname());
-//        existingUser.setEmail(user.getEmail());
-//        existingUser.setRole(user.getRole());
-//        existingUser.setUserName(user.getUserName());
-//        existingUser.setPassword(user.getPassword());
-//        existingUser.setStatus(user.getStatus());
-//        existingUser.setCreationTime(user.getCreationTime());
-//        existingUser.setModificationTime(user.getModificationTime());
-       // existingUser.setUserCreator(user.getUserCreator());
         return existingUser;
     }
 

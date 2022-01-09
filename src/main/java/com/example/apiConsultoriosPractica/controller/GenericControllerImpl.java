@@ -14,7 +14,7 @@ import java.util.List;
 
 public abstract class GenericControllerImpl<T extends SharedInfo, S extends GenericServiceImpl<T,Long>> implements GenericController<T, Long> {
 
-    //@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     protected S servicio;
 
