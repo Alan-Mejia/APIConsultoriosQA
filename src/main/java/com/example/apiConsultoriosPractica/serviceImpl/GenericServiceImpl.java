@@ -2,18 +2,15 @@ package com.example.apiConsultoriosPractica.serviceImpl;
 
 import com.example.apiConsultoriosPractica.exception.ResourceNotFoundException;
 import com.example.apiConsultoriosPractica.models.SharedInfo;
-import com.example.apiConsultoriosPractica.models.User;
 import com.example.apiConsultoriosPractica.repository.GenericRepository;
 import com.example.apiConsultoriosPractica.service.GenericService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.scheduling.annotation.Async;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
-//@Service
 public abstract class GenericServiceImpl<T extends SharedInfo, ID extends Serializable> implements GenericService<T, ID> {
     protected GenericRepository<T,ID> genericRepository;
 
@@ -22,37 +19,46 @@ public abstract class GenericServiceImpl<T extends SharedInfo, ID extends Serial
 
     }
 
+    @Async("asyncExecutor")
     @Override
     @Transactional
-    public T save(T user) {
-        return genericRepository.save(user);
+    public CompletableFuture<T> save(T entityModel) {
+        System.out.println( Thread.currentThread().getName());
+        return CompletableFuture.completedFuture(genericRepository.save(entityModel));
     }
 
+    @Async("asyncExecutor")
     @Override
     @Transactional
-    public List<T> getAll() {
-        return genericRepository.findAll();
+    public CompletableFuture<List<T>> getAll() {
+        System.out.println( Thread.currentThread().getName());
+        return CompletableFuture.completedFuture(genericRepository.findAll());
     }
 
+    @Async("asyncExecutor")
     @Override
     @Transactional
-    public T getById(ID id) {
-        ResponseEntity responseEntity;
-        return genericRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User","Id",id));
+    public CompletableFuture<T> getById(ID id) {
+        System.out.println( Thread.currentThread().getName());
+        return CompletableFuture.completedFuture(genericRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Entity", "Id", id)));
     }
 
+    @Async("asyncExecutor")
     @Override
     @Transactional
-    public T update(T user, ID id) {
+    public CompletableFuture<T> update(T user, ID id) {
+        System.out.println( Thread.currentThread().getName());
         T existingUser = genericRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User","Id",id));
-        return existingUser;
+        return CompletableFuture.completedFuture(genericRepository.save(existingUser));
     }
 
     @Override
     @Transactional
-    public void delete(ID id) {
+    public CompletableFuture<Boolean> delete(ID id) {
+        System.out.println( Thread.currentThread().getName());
         genericRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User","Id",id));
         genericRepository.deleteById(id);
+        return CompletableFuture.completedFuture(true);
     }
 
 }

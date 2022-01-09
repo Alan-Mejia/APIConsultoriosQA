@@ -1,14 +1,17 @@
 package com.example.apiConsultoriosPractica.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @MappedSuperclass
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SharedInfo implements Serializable  {
 
     @Id
@@ -21,11 +24,11 @@ public class SharedInfo implements Serializable  {
 
     @Column(name="Creationtime")
     @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date creationTime;
+    private Date creationTime;
 
     @Column(name="Modificationtime")
     @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date modificationTime;
+    private Date modificationTime;
 
     @Column(name="Usermodifier")
     private String userModifier;

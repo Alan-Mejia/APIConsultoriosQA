@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface GenericController <T extends SharedInfo,ID extends Serializable>{
-    List<?> getAll();
-    ResponseEntity<?> getOne(@PathVariable ID id);
-    ResponseEntity<?> save(@RequestBody T entityModel);
-    ResponseEntity<?> update(@RequestBody T entityModel,@PathVariable ID id);
-    ResponseEntity<String> delete(@PathVariable ID id);
+    CompletableFuture<ResponseEntity> getAll();
+    CompletableFuture<ResponseEntity> getOne(@PathVariable ID id);
+    CompletableFuture<ResponseEntity> save(@RequestBody T entityModel);
+    CompletableFuture<ResponseEntity> update(@RequestBody T entityModel,@PathVariable ID id);
+    CompletableFuture<ResponseEntity> delete(@PathVariable ID id);
 
 
 }

@@ -3,14 +3,9 @@ package com.example.apiConsultoriosPractica.controller;
 import com.example.apiConsultoriosPractica.models.SharedInfo;
 import com.example.apiConsultoriosPractica.serviceImpl.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.Serializable;
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public abstract class GenericControllerImpl<T extends SharedInfo, S extends GenericServiceImpl<T,Long>> implements GenericController<T, Long> {
 
@@ -19,28 +14,27 @@ public abstract class GenericControllerImpl<T extends SharedInfo, S extends Gene
     protected S servicio;
 
     @PostMapping("")
-    public ResponseEntity<T> save(@RequestBody T entityModel){
-        return new ResponseEntity<T>(servicio.save(entityModel),HttpStatus.OK);
+    public CompletableFuture<ResponseEntity> save(@RequestBody T entityModel){
+        return servicio.save(entityModel).thenApply(ResponseEntity::ok);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<T> getOne(@RequestBody Long id){
-        return new ResponseEntity<T>(servicio.getById(id),HttpStatus.OK);
+    public CompletableFuture<ResponseEntity>  getOne(@RequestBody Long id){
+        return servicio.getById(id).thenApply(ResponseEntity::ok);
     }
     @GetMapping("")
-    public List<T> getAll(){
-        return servicio.getAll();
+    public CompletableFuture<ResponseEntity> getAll(){
+        return servicio.getAll().thenApply(ResponseEntity::ok);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<T> update(@RequestBody T entityModel, Long id){
-        return new ResponseEntity<T>(servicio.update(entityModel,id),HttpStatus.OK);
+    public CompletableFuture<ResponseEntity> update(@RequestBody T entityModel, Long id){
+        return servicio.update(entityModel, id).thenApply(ResponseEntity::ok);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id){
-        servicio.delete(id);
-        return new ResponseEntity<String>("Deleted successfully",HttpStatus.OK);
+    public CompletableFuture<ResponseEntity> delete(@PathVariable Long id){
+        return servicio.delete(id).thenApply(ResponseEntity::ok);
     }
 }
 
