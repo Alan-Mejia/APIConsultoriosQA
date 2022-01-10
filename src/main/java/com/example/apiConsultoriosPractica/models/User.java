@@ -36,5 +36,4 @@ public class User extends SharedInfo{
     private String password;
 
 
-
 }

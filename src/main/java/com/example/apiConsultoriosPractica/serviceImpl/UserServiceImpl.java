@@ -43,13 +43,11 @@ public class UserServiceImpl extends GenericServiceImpl<User,Long> implements Us
 
     @Async("asyncExecutor")
     @Transactional
-    public CompletableFuture<User> updateDTO(User entityModel, Long id) {
+    public CompletableFuture<User> updateDTO(UserDTO entityModel, Long id) {
         System.out.println( Thread.currentThread().getName());
         User existingUser = genericRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User","Id",id));
-        existingUser.setName(entityModel.getName());
-        existingUser.setLastName(entityModel.getLastName());
-        existingUser.setEmail(entityModel.getEmail());
-        existingUser.setPassword(bCryptPasswordEncoder.encode(entityModel.getPassword()));
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.map(entityModel,existingUser);
         return CompletableFuture.completedFuture(genericRepository.save(existingUser));
     }
 

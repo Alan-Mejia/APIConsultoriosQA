@@ -41,9 +41,9 @@ public class UserController extends GenericControllerImpl<User,UserServiceImpl>{
         return userService.save(user).thenApply(ResponseEntity::ok);
     }
 
-    @Override
+    //@Override
     @PutMapping("/updateDTO/{id}")
-    public CompletableFuture<ResponseEntity> update(@RequestBody User entityModel, Long id){
+    public CompletableFuture<ResponseEntity> update(@RequestBody UserDTO entityModel,@PathVariable Long id){
         return servicio.updateDTO(entityModel, id).thenApply(ResponseEntity::ok);
     }
 
