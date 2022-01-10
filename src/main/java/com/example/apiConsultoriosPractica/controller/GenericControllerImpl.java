@@ -1,9 +1,11 @@
 package com.example.apiConsultoriosPractica.controller;
 
 import com.example.apiConsultoriosPractica.models.SharedInfo;
+import com.example.apiConsultoriosPractica.models.User;
 import com.example.apiConsultoriosPractica.serviceImpl.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.CompletableFuture;
 
