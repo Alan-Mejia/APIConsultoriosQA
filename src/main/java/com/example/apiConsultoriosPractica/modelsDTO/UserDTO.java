@@ -12,6 +12,9 @@ public class UserDTO{
     @Column(name="Name")
     private String name;
 
+    @Column(name="Username")
+    private String username;
+
     @Column(name="Lastname")
     private String lastName;
 

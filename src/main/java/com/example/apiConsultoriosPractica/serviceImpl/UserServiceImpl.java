@@ -9,6 +9,7 @@ import com.example.apiConsultoriosPractica.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 public class UserServiceImpl extends GenericServiceImpl<User,Long> implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    protected BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserServiceImpl(GenericRepository<User, Long> genericRepository) {
         super(genericRepository);
@@ -46,7 +49,7 @@ public class UserServiceImpl extends GenericServiceImpl<User,Long> implements Us
         existingUser.setName(entityModel.getName());
         existingUser.setLastName(entityModel.getLastName());
         existingUser.setEmail(entityModel.getEmail());
-        existingUser.setPassword(entityModel.getPassword());
+        existingUser.setPassword(bCryptPasswordEncoder.encode(entityModel.getPassword()));
         return CompletableFuture.completedFuture(genericRepository.save(existingUser));
     }
 

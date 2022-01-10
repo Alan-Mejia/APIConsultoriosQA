@@ -35,7 +35,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         try {
             User credentials = new ObjectMapper().readValue(request.getInputStream(),User.class);
-            //SharedInfo credentials = new ObjectMapper().readValue(request.getInputStream(),SharedInfo.class);
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     credentials.getUsername(),credentials.getPassword(),new ArrayList<>()));
         }catch (IOException e){

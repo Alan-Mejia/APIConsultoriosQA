@@ -3,7 +3,7 @@ package com.example.apiConsultoriosPractica.security;
 public class Constants {
     // Spring Security
 
-    //public static final String LOGIN_URL = "";
+    public static final String LOGIN_URL = "/generate/token";
     public static final String HEADER_AUTHORIZATION_KEY = "Authorization";
     public static final String TOKEN_BEARER_PREFIX = "Bearer ";
 
