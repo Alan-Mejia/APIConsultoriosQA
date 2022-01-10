@@ -46,12 +46,13 @@ public abstract class GenericServiceImpl<T extends SharedInfo, ID extends Serial
     @Async("asyncExecutor")
     @Override
     @Transactional
-    public CompletableFuture<T> update(T user, ID id) {
+    public CompletableFuture<T> update(T entityModel, ID id) {
         System.out.println( Thread.currentThread().getName());
         T existingUser = genericRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User","Id",id));
         return CompletableFuture.completedFuture(genericRepository.save(existingUser));
     }
 
+    @Async("asyncExecutor")
     @Override
     @Transactional
     public CompletableFuture<Boolean> delete(ID id) {
