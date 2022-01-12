@@ -2,6 +2,7 @@ package com.example.apiConsultoriosPractica.serviceImpl;
 
 import com.example.apiConsultoriosPractica.exception.ResourceNotFoundException;
 import com.example.apiConsultoriosPractica.models.SharedInfo;
+import com.example.apiConsultoriosPractica.modelsDTO.UserDTO;
 import com.example.apiConsultoriosPractica.repository.GenericRepository;
 import com.example.apiConsultoriosPractica.service.GenericService;
 import org.springframework.scheduling.annotation.Async;
@@ -16,7 +17,6 @@ public abstract class GenericServiceImpl<T extends SharedInfo, ID extends Serial
 
     public GenericServiceImpl(GenericRepository<T, ID> genericRepository) {
         this.genericRepository = genericRepository;
-
     }
 
     @Async("asyncExecutor")

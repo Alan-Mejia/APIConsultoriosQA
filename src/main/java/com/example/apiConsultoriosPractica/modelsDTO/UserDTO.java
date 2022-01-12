@@ -24,4 +24,12 @@ public class UserDTO{
     @Column(name="Password")
     private String password;
 
+
+    /*public UserDTO(String name, String username, String lastName, String email, String password) {
+        this.name = name;
+        this.username = username;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }*/
 }
