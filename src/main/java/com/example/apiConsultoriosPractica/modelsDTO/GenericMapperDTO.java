@@ -22,5 +22,4 @@ public class GenericMapperDTO {
         return modelMapper.map(user,UserDTO.class);
     }
 
-
 }

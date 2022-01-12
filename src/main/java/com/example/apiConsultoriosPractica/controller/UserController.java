@@ -12,10 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @RestController
@@ -44,7 +44,10 @@ public class UserController extends GenericControllerImpl<User,UserServiceImpl>{
     //@Override
     @PutMapping("/updateDTO/{id}")
     public CompletableFuture<ResponseEntity> update(@RequestBody UserDTO entityModel,@PathVariable Long id){
+        entityModel.setPassword(bCryptPasswordEncoder.encode(entityModel.getPassword()));
         return servicio.updateDTO(entityModel, id).thenApply(ResponseEntity::ok);
     }
+
+    List<String> lista1 = new ArrayList<>();
 
 }

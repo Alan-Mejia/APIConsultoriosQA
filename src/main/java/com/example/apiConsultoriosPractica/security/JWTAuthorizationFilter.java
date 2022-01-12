@@ -3,6 +3,7 @@ package com.example.apiConsultoriosPractica.security;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -29,9 +30,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         String header = request.getHeader(HEADER_AUTHORIZATION_KEY);
         if(header == null || header.startsWith(TOKEN_BEARER_PREFIX)){
             filterChain.doFilter(request,response);
+            return;
         }
         UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
-
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        filterChain.doFilter(request,response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request){
@@ -46,6 +49,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             if(user != null){
                 return new UsernamePasswordAuthenticationToken(user,null,new ArrayList<>());
             }
+            return null;
         }
         return null;
     }

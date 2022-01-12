@@ -2,6 +2,7 @@ package com.example.apiConsultoriosPractica.serviceImpl;
 
 import com.example.apiConsultoriosPractica.exception.ResourceNotFoundException;
 import com.example.apiConsultoriosPractica.models.User;
+import com.example.apiConsultoriosPractica.modelsDTO.GenericMapperDTO;
 import com.example.apiConsultoriosPractica.modelsDTO.UserDTO;
 import com.example.apiConsultoriosPractica.repository.GenericRepository;
 import com.example.apiConsultoriosPractica.repository.UserRepository;
@@ -25,6 +26,8 @@ public class UserServiceImpl extends GenericServiceImpl<User,Long> implements Us
     @Autowired
     protected BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    static GenericMapperDTO genericMapperDTO = GenericMapperDTO.singleInstance();
+
     public UserServiceImpl(GenericRepository<User, Long> genericRepository) {
         super(genericRepository);
     }
@@ -34,9 +37,13 @@ public class UserServiceImpl extends GenericServiceImpl<User,Long> implements Us
     public CompletableFuture<List<UserDTO>> getAllDTO(){
         List<User> entities = userRepository.findAll();
         List<UserDTO> dtos = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
+        //ModelMapper modelMapper = new ModelMapper();
         for(User user : entities){
-            dtos.add(modelMapper.map(user,UserDTO.class));
+            //dtos.add(modelMapper.map(user,UserDTO.class));
+
+            UserDTO userDTO;
+            userDTO= genericMapperDTO.mapToSimpleUserDTO(user);
+            dtos.add(userDTO);
         }
         return CompletableFuture.completedFuture(dtos);
     }
